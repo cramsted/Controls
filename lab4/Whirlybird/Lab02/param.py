@@ -30,3 +30,18 @@ theta0 = 0.0*np.pi/180  # Roll of Whirlybird relative to the ground, rads
 thetadot0 = 0.0         # Derivative of the roll
 psi0 = 0.0*np.pi/180    # Yaw of Whirlybird relative to the ground, rads
 psidot0 = 0.0           # Derivative of the yaw
+
+
+# Equilibrium tau at theta = 0
+tau_e = m*g*ell/2
+
+####################################################
+#    PD Control: Pole Placement
+####################################################
+
+
+kp = 2.604
+kd = 3.472
+
+print('kp: ', kp)
+print('kd: ', kd)

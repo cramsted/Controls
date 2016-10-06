@@ -1,0 +1,8 @@
+prefix=/fsi/welkert/ECEn483/whirlybird_ws/devel
+
+Name: whirlybird_controller
+Description: Description of whirlybird_controller
+Version: 0.0.0
+Cflags: 
+Libs: -L/fsi/welkert/ECEn483/whirlybird_ws/devel/lib 
+Requires: 

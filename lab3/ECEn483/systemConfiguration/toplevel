@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo_green "copying .bashrc"
+cp bashrc ~/.bashrc
+
+sed 's/COMPUTER/$ROS_MASTER_URI/g' rosrc > rosrc.tmp
+cp rosrc.tmp ~/.rosrc
+
+echo_green "copying keyes"
+cp keys/{id_rsa,id_rsa.pub,known_hosts} ~/.ssh/
+
+echo "cleaning"
+rm -rf *.tmp
+
+pip install control

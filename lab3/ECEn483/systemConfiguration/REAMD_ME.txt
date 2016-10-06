@@ -1,0 +1,26 @@
+These files are intended to setup your J drive with the necessary file to connect with the Whirlybirds. The contents of the folder are
+- toplevel
+- bashrc file
+- rosrc file
+- kyes
+
+
+The file 'toplevel' is the file that needs to be executed, and it will setup your J drive. 
+
+The bashrc will become your .bashrc file. If you already have a .bashrc file that you wish to keep, then you need to manualy merge the two files, and save the merged .bashrc file in another directory. Once the script "toplevel" has run, place your merged .bashrc back in the root directory.
+
+The rosrc is responsible for setting up your ROS environment variables evertime a new terminal opens up. 
+
+The directory keys contains the ssh keys for the Whirlbyrids. Without the keys, you will not be able to connect to the them.
+
+To install the files, navigate to the directory containing the folder 'systemConfiguration' and run the following command in the terminal
+
+chmod -R +x systemConfiguration 
+
+This will make all of your files to have executable permissions. 
+
+In the same terminal change directory to systemConfiguration and run the command
+
+source ./toplevel
+
+Thats it! Your computer is now configured.

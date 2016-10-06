@@ -1,0 +1,8 @@
+prefix=/fsi/welkert/ECEn483/whirlybird_ws/install
+
+Name: whirlybird_hardware
+Description: Description of whirlybird_hardware
+Version: 0.0.0
+Cflags: 
+Libs: -L/fsi/welkert/ECEn483/whirlybird_ws/install/lib 
+Requires: 

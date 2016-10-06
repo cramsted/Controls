@@ -70,7 +70,7 @@ class mySignal:
 		if temp == 0:
 			return -self.A
 		return temp
-		
+
 	def sawtooth_wave(self,t):
 	  return self.A*signal.sawtooth((2*np.pi*self.f*t + self.phase), width = 0)
 

@@ -70,8 +70,8 @@ class plotGenerator:
             '''
         # Section 2
         ####################################################################
-        self.handle.append(myPlot(self.ax[0],1,'t(s)', 'h',
-                                 'h_r/h'))
+        self.handle.append(myPlot(self.ax[0],1,'t(s)', 'theta',
+                                 'theta_r/theta'))
         # self.handle.append(myPlot(self.ax[1],180.0/np.pi,'t(s)','deg','theta'))
         self.handle.append(myPlot(self.ax[1],1,'t(s)','N','force'))
         ####################################################################
@@ -229,7 +229,7 @@ class myPlot:
         else: # Add new data to the plot
 
             # zip rearranges the list
-            data = zip(*self.data_history)
+            data = list(zip(*self.data_history))
 
             # Updates the x and y data of each line.
             for i in range(len(self.line)):

@@ -31,9 +31,10 @@ thetadot0 = 0.0         # Derivative of the roll
 psi0 = 0.0*np.pi/180    # Yaw of Whirlybird relative to the ground, rads
 psidot0 = 0.0           # Derivative of the yaw
 
+F_e = (m1 - m2*(L2/L1))*g
 
 # Equilibrium tau at theta = 0
-tau_e = m*g*ell/2
+# tau_e = m*g*ell/2
 
 ####################################################
 #    PD Control: Pole Placement

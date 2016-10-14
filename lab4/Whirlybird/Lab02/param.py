@@ -32,6 +32,7 @@ psi0 = 0.0*np.pi/180    # Yaw of Whirlybird relative to the ground, rads
 psidot0 = 0.0           # Derivative of the yaw
 
 F_e = (m1 - m2*(L2/L1))*g
+F_max = 10.85
 
 # Equilibrium tau at theta = 0
 # tau_e = m*g*ell/2
@@ -39,10 +40,18 @@ F_e = (m1 - m2*(L2/L1))*g
 ####################################################
 #    PD Control: Pole Placement
 ####################################################
+tr = 0.6
+wn = 2.2/tr
+zeta = 0.707
+b0 = 1.152
 
+kp = (wn**2)/b0
+kd = (2*zeta*wn)/b0
+# except Exception as e:
+#     raise
 
-kp = 2.604
-kd = 3.472
+# kp = 2.604
+# kd = 3.472
 
 print('kp: ', kp)
 print('kd: ', kd)

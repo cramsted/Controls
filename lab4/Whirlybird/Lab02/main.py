@@ -23,15 +23,15 @@ def convertForces(u):
 
 
 t_start = 0.0   # Start time of simulation
-t_end = 3.0	# End time of simulation
+t_end = 12.0	# End time of simulation
 t_Ts = P.Ts	 # Simulation time step
-t_elapse = 0.01 # Simulation time elapsed between each iteration
+t_elapse = 0.03 # Simulation time elapsed between each iteration
 t_pause = 0.01  # Pause between each iteration
 
 plotGen = plotGenerator()
 simAnimation = WhirlybirdAnimation()  # Instantiate Animate class
 dynam = WhirlybirdDynamics()			# Instantiate Dynamics class
-square_wave = mySignal(A=15*(np.pi/180),f=.02)
+square_wave = mySignal(A=15*(np.pi/180),f=0.1)
 
 t = t_start			   # Declare time variable to keep track of simulation time elapsed
 
@@ -56,8 +56,8 @@ while t < t_end:
 	plt.pause(0.0001)
 
 	# Organizes the new data to be passed to plotGen
-	new_data = [[ref_input[0],states[0]],
-				# [states[1]],
+	new_data = [[ref_input[0]],
+				[states[1]],
 			    [u_converted[0]]]
 	plotGen.updateDataHistory(t, new_data)
 

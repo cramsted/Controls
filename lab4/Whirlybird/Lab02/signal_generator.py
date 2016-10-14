@@ -66,7 +66,7 @@ class mySignal:
 			print("input signal type not recognized")
 
 	def square_wave(self,t):
-		temp = self.A*signal.square((2*np.pi*self.f*t+self.phase), duty = 0.5) + 0.5
+		temp = self.A*signal.square((2*np.pi*self.f*t+self.phase), duty = 0.5)
 		if temp == 0:
 			return -self.A
 		return temp

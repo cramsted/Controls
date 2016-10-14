@@ -23,7 +23,7 @@ class plotGenerator:
         #SECTION 1
         ##############################################################
         # Number of subplots = num_of_rows*num_of_cols
-        self.num_of_rows = 2    # Number of subplot rows
+        self.num_of_rows = 3    # Number of subplot rows
         self.num_of_cols = 1    # Number of subplot columns
         ##############################################################
 
@@ -72,8 +72,8 @@ class plotGenerator:
         ####################################################################
         self.handle.append(myPlot(self.ax[0],1,'t(s)', 'theta',
                                  'theta_r/theta'))
-        # self.handle.append(myPlot(self.ax[1],180.0/np.pi,'t(s)','deg','theta'))
-        self.handle.append(myPlot(self.ax[1],1,'t(s)','N','force'))
+        self.handle.append(myPlot(self.ax[1],180.0/np.pi,'t(s)','deg','theta'))
+        self.handle.append(myPlot(self.ax[2],1,'t(s)','N','force'))
         ####################################################################
 
 

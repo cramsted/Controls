@@ -13,5 +13,6 @@ def getForces(y_r,y):
   # in the params file, so we do it here
   F = P.F_e * np.cos(theta) + F_t
   tau = 0
-
+  if F > P.F_max:
+      F = P.F_max
   return [F, tau]

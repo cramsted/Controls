@@ -34,7 +34,7 @@ class Signals:
 	#SECTION 1
 	##################################################################
 		self.handle.append(mySignal(0.5,0.1)) # theta
-		self.handle.append(mySignal(0.7,0.1)) # psi
+		self.handle.append(mySignal(0.5,0.1)) # psi
 	##################################################################
 
 	# This function returns the values of the signal generator as

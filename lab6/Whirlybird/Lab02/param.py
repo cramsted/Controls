@@ -131,7 +131,7 @@ psi_alpha0 = psi_wn**2
 psi_kp = (psi_alpha0-psi_a0)/(phi_DC*psi_b0)
 psi_kd = (psi_alpha1-psi_a1)/(phi_DC*psi_b0)
 
-psi_ki = 0.001
+psi_ki = 0.1
 psi_windup = 0.15
 
 print('th_kp: ', th_kp)

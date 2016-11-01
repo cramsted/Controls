@@ -131,9 +131,10 @@ class psiPID_ctrl:
       a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
       a2 = 2/(2*P.sigma+P.Ts)
       self.differentiator = a1*self.differentiator \
-                          + a2*(psi -self.psi_d1)
+                          + a2*(error -self.error_d1)
 
-      self.psi_d1 = psi
+      # self.psi_d1 = psi
+
       # Update Integrator
       if abs(self.differentiator) <0.05:
         self.integrator += (P.Ts/2.0)*(error+self.error_d1)
@@ -177,9 +178,8 @@ class thetaPID_ctrl:
       a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
       a2 = 2/(2*P.sigma+P.Ts)
       self.differentiator = a1*self.differentiator \
-                          + a2*(theta -self.theta_d1)
+                          + a2*(error -self.error_d1)
 
-      self.theta_d1 = theta
       # Update Integrator
       if abs(self.differentiator) <0.05:
         self.integrator += (P.Ts/2.0)*(error+self.error_d1)

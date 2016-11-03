@@ -28,7 +28,7 @@ psidot0 = 0.0          # ,rads/s
 Ts = 0.01                # Time step
 sigma = 0.05
 
-F_e = (m1 - m2*(L2/L1))*g
+F_e = (m1 - m2*(l2/l1))*g
 phimax = 45.0 *np.pi / 180.0
 F_max = 50.0
 tau_max = 50.0

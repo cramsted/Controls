@@ -1,0 +1,8 @@
+prefix=/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel
+
+Name: whirlybird_msgs
+Description: Description of whirlybird_msgs
+Version: 0.0.0
+Cflags: -I/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel/include
+Libs: -L/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel/lib 
+Requires: 

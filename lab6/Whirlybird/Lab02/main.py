@@ -22,8 +22,15 @@ def convertForces(u):
 		return propagateDerivativeIn		# The list will be passed in to propogateDerivative
 
 def convertForcesToPWM(u): 
-	pwml = u[0] / P.pwmConversionFactor
-	pwmr = u[1] / P.pwmConversionFactor
+	F = u[0]
+	tau = u[1]
+	pwml = (1/(2*P.km))*(F + tau / P.d)
+	pwmr = (1/(2*P.km))*(F - tau / P.d)
+
+	if pwml >= 0.6: 
+		pwml = 0.6
+	if pwmr >= 0.6: 
+		pwmr = 0.6
 	return [pwml,pwmr]
 
 t_start = 0.0   # Start time of simulation
@@ -54,8 +61,8 @@ while t < t_end:
 		states = dynam.Outputs()             # Get current states
 		u = ctrl.getForces(ref_input,states) # Calculate the forces
 		u_converted = convertForces(u)
-		temp = convertForcesToPWM(u_converted)
-		print("left: %d right %d" % (temp[0], temp[1]))
+		temp = convertForcesToPWM(u)
+		print("left: %.2f right %.2f" % (temp[0], temp[1]))
 		dynam.propagateDynamics(u_converted)           # Propagate the dynamics of the model in time
 		t = round(t +t_Ts,2)                 # Update time elapsed
 
@@ -68,7 +75,7 @@ while t < t_end:
 	new_data = [[ref_input[0], states[1]],
 				[ref_input[0], states[0]],
 				[ref_input[0], states[2]],
-			    [u_converted[0]]]
+			    [temp[0],temp[1]]]
 	plotGen.updateDataHistory(t, new_data)
 
 	plt.figure(plotGen.fig.number)

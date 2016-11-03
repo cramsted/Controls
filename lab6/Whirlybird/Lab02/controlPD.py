@@ -147,7 +147,7 @@ class psiPID_ctrl:
 
       phi_r_sat = self.saturate(phi_r_unsat)
 
-      print("integrator: ", self.integrator)
+      # print("integrator: ", self.integrator)
       if abs(self.integrator) > self.windup:
         self.integrator = self.windup*np.sign(self.integrator)
 

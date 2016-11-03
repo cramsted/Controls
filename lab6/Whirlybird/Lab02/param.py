@@ -26,6 +26,8 @@ sigma = 0.05
 
 # For conversion to pwm
 pwmConversionFactor = 10.875
+pwm_e = .48
+km = (m1*L1*g - m2*L2*g) / (L1 *(2*pwm_e))
 
 # Initial Conditions
 phi0 = 0.0*np.pi/180    # Pitch of Whirlybird relative to the ground, rads
@@ -89,7 +91,7 @@ phi_a0  = 0.0
 # S**2 + 2*zeta*wn*S + wn**2
 
 phi_zeta = 0.7       # Damping Coefficient
-phi_tr = 0.3           # Rise time, s
+phi_tr = 0.2           # Rise time, s
 phi_wn = 2.2/phi_tr     # Natural frequency
 
 # S**2 + alpha1*S + alpha0
@@ -134,6 +136,7 @@ psi_kd = (psi_alpha1-psi_a1)/(phi_DC*psi_b0)
 psi_ki = 0.1
 psi_windup = 0.15
 
+print('km: ', km)
 print('th_kp: ', th_kp)
 print('th_kd: ', th_kd)
 print('phi_kp: ',phi_kp)

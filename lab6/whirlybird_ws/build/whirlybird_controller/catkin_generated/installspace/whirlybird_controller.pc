@@ -1,0 +1,8 @@
+prefix=/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/install
+
+Name: whirlybird_controller
+Description: Description of whirlybird_controller
+Version: 0.0.0
+Cflags: 
+Libs: -L/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/install/lib 
+Requires: 

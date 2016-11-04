@@ -79,10 +79,10 @@
   "3e3717ac8e9443aa62d7102a5860f5e7")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Command>)))
   "Returns full string definition for message of type '<Command>"
-  (cl:format cl:nil "# Whirlybird.msg~%~%float32 left_motor~%float32 right_motor~%~%~%"))
+  (cl:format cl:nil "# Whirlybird.msg~%~%float32 left_motor~%float32 right_motor~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Command)))
   "Returns full string definition for message of type 'Command"
-  (cl:format cl:nil "# Whirlybird.msg~%~%float32 left_motor~%float32 right_motor~%~%~%"))
+  (cl:format cl:nil "# Whirlybird.msg~%~%float32 left_motor~%float32 right_motor~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Command>))
   (cl:+ 0
      4

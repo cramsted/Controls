@@ -49,7 +49,7 @@ pwm_e = .48
 
 # Open Loop
 # kp*b0/(S**2 + kd*b*S + kp*b)
-th_b0 = (l1/(m1*L1**2+m2*l2**2+Jy))
+th_b0 = (l1/(m1*l1**2+m2*l2**2+Jy))
 th_a1 = 0.0
 th_a0 = 0.0
 
@@ -112,7 +112,7 @@ phi_DC = 1   #DC gain
 phi_ki = 0.0
 
 #---------------------------------------------------
-#                  Outer Loop         
+#                  Outer Loop
 #---------------------------------------------------
 M = 10.0    # bandwidth separation factor
 # Open Loop
@@ -156,7 +156,7 @@ print("tau_max: ", tau_max)
 UNCERTAINTY_PARAMETERS = False
 if UNCERTAINTY_PARAMETERS:
 	alpha = 0.2;                                    # uncertainty parameter
-	l1 = 0.85*(1+2*alpha*np.random.rand()-alpha)    # Distance between fulcrum 
+	l1 = 0.85*(1+2*alpha*np.random.rand()-alpha)    # Distance between fulcrum
 													# and the head , m
 	l2 = 0.3048*(1+2*alpha*np.random.rand()-alpha)  # Distance between the fulcrum
 													# and end of Whirlybird's tail, m
@@ -168,4 +168,3 @@ if UNCERTAINTY_PARAMETERS:
 	Jx = 0.0047*(1+2*alpha*np.random.rand()-alpha)  # , kg-m**2
 	Jy = 0.0014*(1+2*alpha*np.random.rand()-alpha)  # , kg-m**2
 	Jz = 0.0041*(1+2*alpha*np.random.rand()-alpha)  # , kg-m**2
-

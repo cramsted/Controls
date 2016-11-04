@@ -67,14 +67,14 @@ set(whirlybird_msgs_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(whirlybird_msgs_SOURCE_PREFIX /home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/src/whirlybird_msgs)
-  set(whirlybird_msgs_DEVEL_PREFIX /home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel)
+  set(whirlybird_msgs_SOURCE_PREFIX /auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/src/whirlybird_msgs)
+  set(whirlybird_msgs_DEVEL_PREFIX /auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel)
   set(whirlybird_msgs_INSTALL_PREFIX "")
   set(whirlybird_msgs_PREFIX ${whirlybird_msgs_DEVEL_PREFIX})
 else()
   set(whirlybird_msgs_SOURCE_PREFIX "")
   set(whirlybird_msgs_DEVEL_PREFIX "")
-  set(whirlybird_msgs_INSTALL_PREFIX /home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/install)
+  set(whirlybird_msgs_INSTALL_PREFIX /auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/install)
   set(whirlybird_msgs_PREFIX ${whirlybird_msgs_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(whirlybird_msgs_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel/include " STREQUAL " ")
+if(NOT "/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel/include " STREQUAL " ")
   set(whirlybird_msgs_INCLUDE_DIRS "")
-  set(_include_dirs "/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel/include")
+  set(_include_dirs "/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel/include")
   foreach(idir ${_include_dirs})
     if(IS_ABSOLUTE ${idir} AND IS_DIRECTORY ${idir})
       set(include ${idir})
@@ -103,7 +103,7 @@ if(NOT "/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel
         message(FATAL_ERROR "Project 'whirlybird_msgs' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'mark <mark@todo.todo>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'whirlybird_msgs' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/src/whirlybird_msgs/${idir}'.  Ask the maintainer 'mark <mark@todo.todo>' to fix it.")
+      message(FATAL_ERROR "Project 'whirlybird_msgs' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/src/whirlybird_msgs/${idir}'.  Ask the maintainer 'mark <mark@todo.todo>' to fix it.")
     endif()
     _list_append_unique(whirlybird_msgs_INCLUDE_DIRS ${include})
   endforeach()
@@ -122,7 +122,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel/lib;/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel/lib;/opt/ros/kinetic/lib)
+    foreach(path /auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel/lib;/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel/lib;/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel/lib;/auto/fsb/cramsted/Downloads/whirlybird_ws/devel/lib;/opt/ros/kinetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

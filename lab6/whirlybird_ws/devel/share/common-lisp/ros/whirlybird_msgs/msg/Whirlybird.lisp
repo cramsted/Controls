@@ -226,10 +226,10 @@
   "a058255bc42da20a874152da8fe20c12")
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql '<Whirlybird>)))
   "Returns full string definition for message of type '<Whirlybird>"
-  (cl:format cl:nil "# Whirlybird.msg~%~%float32 roll~%float32 pitch~%float32 yaw~%~%float32 accel_x~%float32 accel_y~%float32 accel_z~%~%float32 gyro_x~%float32 gyro_y~%float32 gyro_z~%~%~%"))
+  (cl:format cl:nil "# Whirlybird.msg~%~%float32 roll~%float32 pitch~%float32 yaw~%~%float32 accel_x~%float32 accel_y~%float32 accel_z~%~%float32 gyro_x~%float32 gyro_y~%float32 gyro_z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:message-definition ((type (cl:eql 'Whirlybird)))
   "Returns full string definition for message of type 'Whirlybird"
-  (cl:format cl:nil "# Whirlybird.msg~%~%float32 roll~%float32 pitch~%float32 yaw~%~%float32 accel_x~%float32 accel_y~%float32 accel_z~%~%float32 gyro_x~%float32 gyro_y~%float32 gyro_z~%~%~%"))
+  (cl:format cl:nil "# Whirlybird.msg~%~%float32 roll~%float32 pitch~%float32 yaw~%~%float32 accel_x~%float32 accel_y~%float32 accel_z~%~%float32 gyro_x~%float32 gyro_y~%float32 gyro_z~%~%~%"))
 (cl:defmethod roslisp-msg-protocol:serialization-length ((msg <Whirlybird>))
   (cl:+ 0
      4

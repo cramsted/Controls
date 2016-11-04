@@ -1,8 +1,8 @@
-prefix=/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel
+prefix=/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel
 
 Name: whirlybird_hardware
 Description: Description of whirlybird_hardware
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel/lib 
+Libs: -L/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel/lib 
 Requires: 

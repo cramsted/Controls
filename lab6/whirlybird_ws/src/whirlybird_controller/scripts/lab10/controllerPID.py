@@ -10,7 +10,7 @@ class controllerPID:
       # Instantiates the PD_ctrl object
       self.psiCtrl = psiPID_ctrl(P.psi_kp,P.psi_kd,P.psi_ki,P.psi0,P.phimax,
         P.psi_windup)
-      self.phiCtrl = phiPID_ctrl(P.phi_kp,P.phi_kd,P.phi_ki,P.phi0,P.taumax)
+      self.phiCtrl = phiPID_ctrl(P.phi_kp,P.phi_kd,P.phi_ki,P.phi0,P.tau_max)
       self.thetaCtrl = thetaPID_ctrl(P.th_kp,P.th_kd,P.th_ki,P.theta0,
         P.thetamax,P.th_windup)
       # kp is the proportional gain
@@ -34,12 +34,12 @@ class controllerPID:
     phi = y[0]
     theta_r = y_r[0]
     psi_r = y_r[1]
-    thetadot = y[4]
-    psidot = y[5]
-    phidot = y[3]
+    # thetadot = y[4]
+    # psidot = y[5]
+    # phidot = y[3]
 
     # F_t = P.th_kp * (theta_r - theta) - P.th_kd * thetadot # Calculate the force output
-    Fe = (((P.m1*P.L1-P.m2*P.L2) * P.g) / P.L1) * np.cos(theta)
+    Fe = (((P.m1*P.l1-P.m2*P.l2) * P.g) / P.l1) * np.cos(theta)
     F = self.thetaCtrl.thetaPID_loop(theta_r,theta) + Fe
 
     phi_r = self.psiCtrl.psiPID_loop(psi_r,psi)
@@ -110,7 +110,7 @@ class psiPID_ctrl:
   def psiPID_loop(self,psi_r,psi):
       # Compute the current error
       error = psi_r - psi
-      
+
       # UPIDate Differentiator
       a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
       a2 = 2/(2*P.sigma+P.Ts)

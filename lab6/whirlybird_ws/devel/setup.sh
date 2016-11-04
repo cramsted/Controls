@@ -8,7 +8,7 @@
 
 # since this file is sourced either use the provided _CATKIN_SETUP_DIR
 # or fall back to the destination set at configure time
-: ${_CATKIN_SETUP_DIR:=/home/mark/Dropbox/controlbook/whirlybird/pythonCode/whirlybird_ws/devel}
+: ${_CATKIN_SETUP_DIR:=/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel}
 _SETUP_UTIL="$_CATKIN_SETUP_DIR/_setup_util.py"
 unset _CATKIN_SETUP_DIR
 

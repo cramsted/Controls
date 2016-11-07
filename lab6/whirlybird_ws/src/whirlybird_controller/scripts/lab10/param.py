@@ -96,7 +96,7 @@ phi_a0  = 0.0
 # S**2 + 2*zeta*wn*S + wn**2
 
 phi_zeta = 0.7       # Damping Coefficient
-phi_tr = 0.2           # Rise time, s
+phi_tr = 0.4           # Rise time, s
 phi_wn = 2.2/phi_tr     # Natural frequency
 
 # S**2 + alpha1*S + alpha0

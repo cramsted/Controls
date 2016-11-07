@@ -115,9 +115,9 @@ class psiPID_ctrl:
       a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
       a2 = 2/(2*P.sigma+P.Ts)
       self.differentiator = a1*self.differentiator \
-                          + a2*(error -self.error_d1)
+                          + a2*(psi -self.psi_d1)
 
-      # self.psi_d1 = psi
+      self.psi_d1 = psi
 
       # Update Integrator
       if abs(self.differentiator) <0.05:
@@ -127,7 +127,7 @@ class psiPID_ctrl:
       self.error_d1 = error
 
       # PID Control to calculate T
-      phi_r_unsat = self.kp*error + self.kd*self.differentiator + self.ki*self.integrator
+      phi_r_unsat = self.kp*error - self.kd*self.differentiator + self.ki*self.integrator
 
       phi_r_sat = self.saturate(phi_r_unsat)
 

@@ -101,8 +101,8 @@ class psiPID_ctrl:
       self.error_d1 = 0.0          # Delayed error
       self.kp = kp                 # Proportional control gain
       self.kd = kd                 # Derivative control gain
-      self.ki = ki                 # Integral controal gain
-      self.limit = limit           # Maximum theta
+      self.ki = ki                 # Integral control gain
+      self.limit = limit           # Maximum phi
       self.windup = windup
 
 
@@ -110,23 +110,24 @@ class psiPID_ctrl:
       # Compute the current error
       error = psi_r - psi
       
-      # UPIDate Differentiator
+      # Update Differentiator
       a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
       a2 = 2/(2*P.sigma+P.Ts)
       self.differentiator = a1*self.differentiator \
-                          + a2*(error -self.error_d1)
+                          + a2*(psi - self.psi_d1)
 
-      # self.psi_d1 = psi
+      self.psi_d1 = psi
 
       # Update Integrator
-      if abs(self.differentiator) <0.05:
+      # Only integrate when moving slowly
+      if abs(self.differentiator) < 0.05:
         self.integrator += (P.Ts/2.0)*(error+self.error_d1)
 
       # UPIDate error_d1
       self.error_d1 = error
 
       # PID Control to calculate T
-      phi_r_unsat = self.kp*error + self.kd*self.differentiator + self.ki*self.integrator
+      phi_r_unsat = self.kp*error - self.kd*self.differentiator + self.ki*self.integrator
 
       phi_r_sat = self.saturate(phi_r_unsat)
 
@@ -149,7 +150,7 @@ class thetaPID_ctrl:
       self.error_d1 = 0.0          # Delayed error
       self.kp = kp                 # Proportional control gain
       self.kd = kd                 # Derivative control gain
-      self.ki = ki                 # Integral controal gain
+      self.ki = ki                 # Integral control gain
       self.limit = limit           # Maximum F
       self.windup = windup
 
@@ -157,21 +158,23 @@ class thetaPID_ctrl:
       # Compute the current error
       error = theta_r - theta
 
-      # UPIDate Differentiator
+      # Update Differentiator
       a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
       a2 = 2/(2*P.sigma+P.Ts)
       self.differentiator = a1*self.differentiator \
-                          + a2*(error -self.error_d1)
+                          + a2*(theta -self.theta_d1)
 
+      self.theta_d1 = theta
       # Update Integrator
+      # Only update integrator if moving slow
       if abs(self.differentiator) <0.05:
         self.integrator += (P.Ts/2.0)*(error+self.error_d1)
 
-      # UPIDate error_d1
+      # Update error_d1
       self.error_d1 = error
 
       # PID Control to calculate T
-      F_r_unsat = self.kp*error + self.kd*self.differentiator + self.ki*self.integrator
+      F_r_unsat = self.kp*error - self.kd*self.differentiator + self.ki*self.integrator
 
       F_r_sat = self.saturate(F_r_unsat)
 

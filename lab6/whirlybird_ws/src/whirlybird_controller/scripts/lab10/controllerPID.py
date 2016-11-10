@@ -71,7 +71,7 @@ class phiPID_ctrl:
       self.phi_d1 = phi # update the delay
 
       # Update Integrator
-      if abs(self.phidot) <0.01:
+      if abs(self.phidot) <0.05:
         self.integrator += (P.Ts/2.0)*(error+self.error_d1)
 
       # Update error_d1
@@ -132,8 +132,8 @@ class psiPID_ctrl:
       phi_r_sat = self.saturate(phi_r_unsat)
 
       # print("integrator: ", self.integrator)
-      if abs(self.integrator) > self.windup:
-        self.integrator = self.windup*np.sign(self.integrator)
+    #   if abs(self.integrator) > self.windup:
+    #     self.integrator = self.windup*np.sign(self.integrator)
 
       return phi_r_sat
 
@@ -163,6 +163,8 @@ class thetaPID_ctrl:
       a2 = 2/(2*P.sigma+P.Ts)
       self.differentiator = a1*self.differentiator \
                           + a2*(theta -self.theta_d1)
+
+      self.theta_d1 = theta
 
       # Update Integrator
       if abs(self.differentiator) <0.05:

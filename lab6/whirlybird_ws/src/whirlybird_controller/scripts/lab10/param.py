@@ -96,7 +96,7 @@ phi_a0  = 0.0
 # S**2 + 2*zeta*wn*S + wn**2
 
 phi_zeta = 0.7       # Damping Coefficient
-phi_tr = 0.4           # Rise time, s
+phi_tr = 0.35           # Rise time, s
 phi_wn = 2.2/phi_tr     # Natural frequency
 
 # S**2 + alpha1*S + alpha0
@@ -109,7 +109,7 @@ phi_kp = (phi_alpha0)/phi_b0
 phi_kd = (phi_alpha1)/phi_b0
 phi_DC = 1   #DC gain
 
-phi_ki = 0.0
+phi_ki = 0.01
 
 #---------------------------------------------------
 #                  Outer Loop
@@ -138,8 +138,8 @@ psi_alpha0 = psi_wn**2
 psi_kp = (psi_alpha0-psi_a0)/(phi_DC*psi_b0)
 psi_kd = (psi_alpha1-psi_a1)/(phi_DC*psi_b0)
 
-psi_ki = 0.1
-psi_windup = 0.15
+psi_ki = 0.02
+psi_windup = 0.25
 
 print("th_kp: ", th_kp)
 print("th_kd: ", th_kd)

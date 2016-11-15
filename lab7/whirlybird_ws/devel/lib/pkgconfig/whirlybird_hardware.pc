@@ -1,0 +1,8 @@
+prefix=/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel
+
+Name: whirlybird_hardware
+Description: Description of whirlybird_hardware
+Version: 0.0.0
+Cflags: 
+Libs: -L/auto/fsb/cramsted/Documents/EE483/Controls/lab6/whirlybird_ws/devel/lib 
+Requires: 

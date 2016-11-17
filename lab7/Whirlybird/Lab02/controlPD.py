@@ -7,11 +7,13 @@ class controllerPID:
 
   def __init__(self):
       # Instantiates the PD_ctrl object
-      self.psiCtrl = psiPID_ctrl(P.psi_kp,P.psi_kd,P.psi_ki,P.psi0,P.phimax,
-        P.psi_windup)
-      self.phiCtrl = phiPID_ctrl(P.phi_kp,P.phi_kd,P.phi_ki,P.phi0,P.taumax)
+      #self.psiCtrl = psiPID_ctrl(P.psi_kp,P.psi_kd,P.psi_ki,P.psi0,P.phimax,
+        #P.psi_windup)
+      #self.phiCtrl = phiPID_ctrl(P.phi_kp,P.phi_kd,P.phi_ki,P.phi0,P.taumax)
+      self.lateralCtrl = lateralSSI_ctrl(P.K_lat,P.ki_lat,P.psi0,P.phi0,
+                         P.taumax)
       self.thetaCtrl = thetaSSI_ctrl(P.K_lon,P.ki_lon,P.theta0,
-        P.thetamax)
+        P.Fmax)
       # kp is the proportional gain
       # kd is the derivative gain
       # ki is the integral gain
@@ -41,11 +43,13 @@ class controllerPID:
     Fe = (((P.m1*P.L1-P.m2*P.L2) * P.g) / P.L1) * np.cos(theta)
     F = self.thetaCtrl.thetaSSI_loop(theta_r,theta) + Fe
 
-    phi_r = self.psiCtrl.psiPID_loop(psi_r,psi)
-    tau = self.phiCtrl.phiPID_loop(phi_r,phi)
+    #phi_r = self.psiCtrl.psiPID_loop(psi_r,psi)
+    tau = self.lateralCtrl.lateralSSI_loop(psi_r,psi,phi)
     # if F > P.F_max:
     #     F = P.F_max
-    return [F, tau]
+    u = [F, tau]
+    # import pdb; pdb.set_trace()
+    return u
 
 class phiPID_ctrl:
   def __init__(self,kp,kd,ki,phi0,limit):
@@ -141,6 +145,64 @@ class psiPID_ctrl:
     if abs(u) > self.limit:
       u = self.limit*np.sign(u)
     return u
+## Longitudinal Controller
+class lateralSSI_ctrl:
+  def __init__(self,K,ki,psi0,phi0,limit):
+      self.psidot = 0.0    # Difference term
+      self.phidot = 0.0
+      self.integrator = 0.0        # Integral term
+      self.psi_d1 = psi0               # Delayed y output
+      self.phi_d1 = phi0
+      self.error_d1 = 0.0          # Delayed error
+      self.K = K                 # Proportional control gain
+      self.ki = ki                # Integral control gain
+      self.limit = limit           # Maximum F
+      self.input_disturbance = 0.1
+
+  def lateralSSI_loop(self,psi_r,psi,phi):
+      # Compute the current error
+      error = psi_r - psi
+
+      # Update Differentiator
+      a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
+      a2 = 2/(2*P.sigma+P.Ts)
+      self.psidot = a1*self.psidot \
+                          + a2*(psi - self.psi_d1)
+      self.psi_d1 = psi
+
+      a1 = (2*P.sigma - P.Ts)/(2*P.sigma+P.Ts)
+      a2 = 2/(2*P.sigma+P.Ts)
+      self.phidot = a1*self.phidot \
+                           + a2*(phi -self.phi_d1)
+      self.phi_d1 = phi
+
+      # Update Integrator
+      # Only update integrator if moving slow MAYBE REMOVE...
+      if abs(self.psidot) <0.05:
+        self.integrator += (P.Ts/2.0)*(error+self.error_d1)
+      # Update error_d1
+      self.error_d1 = error
+
+      # Create States vector
+      x = np.matrix([[phi],
+                      [psi-psi_r],
+                      [self.phidot],
+                      [self.psidot]])
+
+      # PID Control to calculate T
+      T_r_unsat = -self.K*x - self.ki*self.integrator # + self.input_disturbance    #self.kp*error - self.kd*self.thetadot + self.ki*self.integrator
+
+      T_r_sat = self.saturate(T_r_unsat)
+
+    #   if abs(self.integrator) > self.windup:
+    #     self.integrator = self.windup*np.sign(self.integrator)
+
+      return T_r_sat.item(0)
+
+  def saturate(self,u):
+    if abs(u) > self.limit:
+      u = self.limit*np.sign(u)
+    return u
 
 ## Longitudinal Controller
 class thetaSSI_ctrl:
@@ -173,7 +235,7 @@ class thetaSSI_ctrl:
       self.error_d1 = error
 
       # Create States vector
-      x = np.matrix([[theta],
+      x = np.matrix([[theta - theta_r],
                       [self.thetadot]])
 
       # PID Control to calculate T
@@ -184,7 +246,7 @@ class thetaSSI_ctrl:
     #   if abs(self.integrator) > self.windup:
     #     self.integrator = self.windup*np.sign(self.integrator)
 
-      return F_r_sat
+      return F_r_sat.item(0)
 
   def saturate(self,u):
     if abs(u) > self.limit:

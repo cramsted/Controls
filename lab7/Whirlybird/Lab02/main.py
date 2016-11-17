@@ -21,16 +21,20 @@ def convertForces(u):
 		propagateDerivativeIn = [fl,fr]	 # Store the forces in a list
 		return propagateDerivativeIn		# The list will be passed in to propogateDerivative
 
-def convertForcesToPWM(u): 
+def convertForcesToPWM(u):
 	F = u[0]
 	tau = u[1]
 	pwml = (1/(2*P.km))*(F + tau / P.d)
 	pwmr = (1/(2*P.km))*(F - tau / P.d)
 
-	if pwml >= 0.6: 
+	if pwml >= 0.6:
 		pwml = 0.6
-	if pwmr >= 0.6: 
+	if pwmr >= 0.6:
 		pwmr = 0.6
+	if pwml < 0:
+		pwml = 0.
+	if pwmr < 0:
+		pwmr = 0.
 	return [pwml,pwmr]
 
 t_start = 0.0   # Start time of simulation
@@ -53,18 +57,19 @@ while t < t_end:
 
 	# The dynamics of the model will be propagated in time by t_elapse
 	# at intervals of t_Ts.
-	t_temp = t +t_elapse
+	t_temp = t + t_elapse
 	# import pdb; pdb.set_trace()
 
 	while t < t_temp:
 
 		states = dynam.Outputs()             # Get current states
 		u = ctrl.getForces(ref_input,states) # Calculate the forces
+
 		u_converted = convertForces(u)
 		temp = convertForcesToPWM(u)
 		print("left: %.2f right %.2f" % (temp[0], temp[1]))
 		dynam.propagateDynamics(u_converted)           # Propagate the dynamics of the model in time
-		t = round(t +t_Ts,2)                 # Update time elapsed
+		t = round(t +t_Ts,3)                 # Update time elapsed
 
 	plt.figure(simAnimation.fig.number) # Switch current figure to animation figure
 	simAnimation.drawWhirlybird(          # Update animation with current user input

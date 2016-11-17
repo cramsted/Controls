@@ -22,7 +22,7 @@ Jz = 0.0041    # Some force in z direction???, kg-m^2
 ell =  5      # For the axis, m
 
 # Simulation Parameters
-Ts = 0.01
+Ts = 0.0033
 sigma = 0.05
 
 # For conversion to pwm
@@ -171,6 +171,42 @@ psi_kd = (psi_alpha1-psi_a1)/(phi_DC*psi_b0)
 
 psi_ki = 0.1
 psi_windup = 0.15
+
+A_lat = np.array([[0.,0.,1.,0.],
+                  [0.,0.,0.,1.],
+                  [0.,0.,0.,0.],
+                  [L1*F_e/(m1*L1**2 + m2*L2**2 + Jz), 0.,0.,0.]])
+
+B_lat = np.array([[0.],
+                  [0.],
+                  [1./Jx],
+                  [0.]])
+
+C_lat = np.array([[1.,0.,0.,0.],
+                 [0.,1.,0.,0.]])
+
+Cr_lat = np.matrix(C_lat[1,:])
+
+A1_lat = np.concatenate((
+            np.concatenate((A_lat, np.zeros((4,1))), axis=1),
+            np.concatenate((-Cr_lat, np.matrix([[0.0]])),axis=1)),axis=0)
+
+B1_lat = np.concatenate((B_lat,np.matrix([[0.0]])),axis=0)
+
+integrator_pole_lat = 0.0
+
+des_char_poly_lat = np.convolve([1, psi_alpha1, psi_alpha0],
+                        [1, phi_alpha1 ,phi_alpha0])
+des_char_poly_lat = np.convolve(des_char_poly_lat, np.poly(integrator_pole_lat))
+des_poles_lat = np.roots(des_char_poly_lat)
+
+if np.linalg.matrix_rank(cnt.ctrb(A1_lat,B1_lat)) != 5:
+    print("The lateral system is not controllable")
+else:
+    K1_lat = cnt.acker(A1_lat,B1_lat, des_poles_lat)
+    K_lat = K1_lat[0, 0:4]
+    ki_lat = K1_lat[0,4]
+
 
 # print('km: ', km)
 # print('th_kp: ', th_kp)

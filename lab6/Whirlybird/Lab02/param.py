@@ -21,7 +21,7 @@ Jz = 0.0041    # Some force in z direction???, kg-m^2
 ell =  5      # For the axis, m
 
 # Simulation Parameters
-Ts = 0.01
+Ts = 0.0033
 sigma = 0.05
 
 # For conversion to pwm

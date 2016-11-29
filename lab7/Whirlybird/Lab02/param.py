@@ -57,7 +57,7 @@ th_a0 = 0.0
 # Desired Closed Loop tuning parameters
 # S**2 + 2*zeta*wn*S + wn**2
 
-th_tr = 1.4           # Rise time, s
+th_tr = 4           # Rise time, s
 th_zeta = 0.7      # Damping Coefficient
 th_wn = 2.2/th_tr     # Natural frequency
 
@@ -140,7 +140,7 @@ phi_kp = (phi_alpha0)/phi_b0
 phi_kd = (phi_alpha1)/phi_b0
 phi_DC = 1   #DC gain
 
-phi_ki = 0.0
+phi_ki = 0
 
 #---------------------------------------------------
 #                    Yaw (PSI)
@@ -169,7 +169,7 @@ psi_alpha0 = psi_wn**2
 psi_kp = (psi_alpha0-psi_a0)/(phi_DC*psi_b0)
 psi_kd = (psi_alpha1-psi_a1)/(phi_DC*psi_b0)
 
-psi_ki = 0.1
+psi_ki = -10
 psi_windup = 0.15
 
 A_lat = np.array([[0.,0.,1.,0.],

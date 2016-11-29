@@ -2,7 +2,7 @@
 import rospy
 import numpy as np
 import matplotlib.pyplot as plt
-import lab10.param as P
+import lab12.param as P
 from whirlybird_msgs.msg import Command
 from whirlybird_msgs.msg import Whirlybird
 from signal_generator import Signals
@@ -11,8 +11,8 @@ from slider_input import Sliders
 # from lab7.controllerPD import controllerPD as ctrl
 # from lab8.controllerPD import controllerPD as ctrl
 # from lab10.controllerPID import controllerPID as ctrl
-from lab10.controllerPID import controllerPID as ctrl
-# from lab12.controllerSSI import controllerSSI as ctrl
+#from lab10.controllerPID import controllerPID as ctrl
+from lab12.controllerSSI import controllerSSI as ctrl
 # from lab13.controllerObs import controllerObs as ctrl
 # from lab14.controllerObsD import controllerObsD as ctrl
 

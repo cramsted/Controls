@@ -91,8 +91,8 @@ A1_lon = np.concatenate((
             np.concatenate((-Cr_lon, np.matrix([[0.0]])),axis=1)), axis=0)
 
 B1_lon = np.concatenate((B_lon, np.matrix([[0.0]])),axis=0)
-
-integrator_pole_lon = -10
+D_lon = np.matrix([[0.0]])
+integrator_pole_lon = -5
 
 des_char_poly_lon = np.convolve([1, th_alpha1, th_alpha0], np.poly(integrator_pole_lon))
 des_poles_lon = np.roots(des_char_poly_lon)
@@ -103,6 +103,7 @@ else:
     K1_lon = cnt.acker(A1_lon,B1_lon, des_poles_lon)
     K_lon = K1_lon[0, 0:2]
     ki_lon = K1_lon[0,2]
+    kr_lon = 1./cnt.dcgain(A_lon - B_lon*K_lon, B_lon, Cr_lon, D_lon)
     print('K1_lon: ', K1_lon)
     print('K_lon: ', K_lon)
     print('ki_lon: ', ki_lon)
@@ -159,7 +160,7 @@ phi_ki = 0
 #---------------------------------------------------
 #                    Yaw (PSI)
 #---------------------------------------------------
-M = 10.0    # bandwidth separation factor
+M = 10  # bandwidth separation factor
 # Open Loop
 # kp*b0/(S**2 + kd*b*S + kp*b)
 psi_b0 = (L1*F_e/(m1*L1**2+m2*L2**2+Jz))
@@ -184,7 +185,7 @@ psi_kp = (psi_alpha0-psi_a0)/(phi_DC*psi_b0)
 psi_kd = (psi_alpha1-psi_a1)/(phi_DC*psi_b0)
 
 psi_ki = -10
-psi_windup = 0.15
+psi_windup = 0.01
 
 A_lat = np.array([[0.,0.,1.,0.],
                   [0.,0.,0.,1.],
@@ -199,6 +200,8 @@ B_lat = np.array([[0.],
 C_lat = np.array([[1.,0.,0.,0.],
                  [0.,1.,0.,0.]])
 
+D_lat = np.matrix([[0.0]])
+
 Cr_lat = np.matrix(C_lat[1,:])
 
 A1_lat = np.concatenate((
@@ -207,7 +210,7 @@ A1_lat = np.concatenate((
 
 B1_lat = np.concatenate((B_lat,np.matrix([[0.0]])),axis=0)
 
-integrator_pole_lat = 0.0
+integrator_pole_lat = -1
 
 des_char_poly_lat = np.convolve([1, psi_alpha1, psi_alpha0],
                         [1, phi_alpha1 ,phi_alpha0])
@@ -220,6 +223,7 @@ else:
     K1_lat = cnt.acker(A1_lat,B1_lat, des_poles_lat)
     K_lat = K1_lat[0, 0:4]
     ki_lat = K1_lat[0,4]
+    kr_lat = 1./cnt.dcgain(A_lat - B_lat*K_lat, B_lat, Cr_lat, D_lat)
 
 ####################################################
 #                   Lat Observer                  #

@@ -10,9 +10,9 @@ class controllerPID:
       #self.psiCtrl = psiPID_ctrl(P.psi_kp,P.psi_kd,P.psi_ki,P.psi0,P.phimax,
         #P.psi_windup)
       #self.phiCtrl = phiPID_ctrl(P.phi_kp,P.phi_kd,P.phi_ki,P.phi0,P.taumax)
-      self.lateralCtrl = lateralObs_ctrl(P.K_lat,P.ki_lat,P.Llat,
+      self.lateralCtrl = lateralObs_ctrl(P.K_lat,P.ki_lat, P.kr_lat, P.Llat,
                          P.taumax)
-      self.thetaCtrl = thetaObs_ctrl(P.K_lon,P.ki_lon,P.Llong,
+      self.thetaCtrl = thetaObs_ctrl(P.K_lon,P.ki_lon, P.kr_lon, P.Llong,
         P.Fmax)
       # kp is the proportional gain
       # kd is the derivative gain
@@ -53,15 +53,16 @@ class controllerPID:
 
 # ## Lateral Controller
 class lateralObs_ctrl:
-  def __init__(self,K,ki,L,limit):
-      self.xhat = np.matrix([[0.0],  #yaw
-                            [0.0],  #roll
-                            [0.0],  #yawdot
-                            [0.0]])  #rolldot
+  def __init__(self,K,ki,kr,L,limit):
+      self.xhat = np.matrix([[0.0],  #roll
+                            [0.0],  #yaw
+                            [0.0],  #rolldot
+                            [0.0]])  #yawdot
       self.integrator = 0.0        # Integral term
       self.tau_d1 = 0.0
       self.error_d1 = 0.0          # Delayed error
       self.K = K                 # Proportional control gain
+      self.kr = kr
       self.ki = ki                # Integral control gain
       self.limit = limit           # Maximum F
       self.L = L
@@ -73,15 +74,16 @@ class lateralObs_ctrl:
       for i in range(N):
           self.xhat += P.Ts/N*(P.A_lat*self.xhat + \
           P.B_lat*(self.tau_d1) + \
-          self.L*(np.matrix([[psi],[phi]]) - P.C_lat*self.xhat))
-
-      error = psi_r-self.xhat.item(0)
-
+          self.L*(np.matrix([[phi],[psi]]) - P.C_lat*self.xhat))
+          #phi and psi were swapped in this part
+      error = psi_r-self.xhat.item(1)
+      # I changed this to 1 as well because psi and phi were swapped
       self.integrator += (P.Ts/2.0)*(error+self.error_d1)
 
       self.error_d1 = error
 
-      tau_unsat = -self.K*self.xhat - self.ki * self.integrator
+      #The kr*psi_r is the feedforward gain, either use that or the integrator
+      tau_unsat = -self.K*self.xhat - self.ki * self.integrator# + self.kr*psi_r
 
       tau_sat = self.saturate(tau_unsat)
 
@@ -137,7 +139,7 @@ class lateralObs_ctrl:
 
 ## Longitudinal Controller
 class thetaObs_ctrl:
-  def __init__(self,K,ki,L,limit):
+  def __init__(self,K,ki,kr,L,limit):
       self.xhat = np.matrix([[0.0],  #pitch
                             [0.0]])  #pitchdot
       self.integrator = 0.0        # Integral term
@@ -145,6 +147,7 @@ class thetaObs_ctrl:
       self.error_d1 = 0.0          # Delayed error
       self.K = K                 # Proportional control gain
       self.ki = ki                # Integral control gain
+      self.kr = kr
       self.limit = limit           # Maximum F
       self.L = L
     #   self.input_disturbance = 0.1
@@ -162,7 +165,8 @@ class thetaObs_ctrl:
 
     self.error_d1 = error
 
-    F_unsat = - self.K*self.xhat - self.ki*self.integrator
+    #The kr*theta_r is the feedforward gain, either use that or the integrator
+    F_unsat = - self.K*self.xhat - self.ki*self.integrator# + self.kr*theta_r
 
     F = self.saturate(F_unsat)
 
